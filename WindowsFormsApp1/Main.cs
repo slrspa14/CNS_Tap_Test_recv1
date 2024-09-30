@@ -13,6 +13,7 @@ namespace WindowsFormsApp1
 {
     public partial class Main : Form
     {
+        //class 분할생각
         //고정 패널 : 시계, 날짜 ,메뉴탭, 요일
         Panel startPanel;
         Panel joinPanel;
