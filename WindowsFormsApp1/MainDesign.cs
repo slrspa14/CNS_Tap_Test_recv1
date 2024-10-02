@@ -4,7 +4,9 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Configuration;
 using System.Linq;
+using System.Runtime.Remoting.Channels;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -23,6 +25,7 @@ namespace WindowsFormsApp1
         Panel resultPanel;
         Panel commomPanel;
 
+        TableLayoutPanel TapTimePanel;
         TableLayoutPanel mTimePanel;
         TableLayoutPanel mMenuPanel;
 
@@ -32,15 +35,12 @@ namespace WindowsFormsApp1
         private Button currentStatus = null;
         private string gifPath = @"D:\test.gif";
 
+
         public MainDesign()
         {
             InitializeComponent();
             CenterToScreen();
-            // 패널 초기화
             InitScreens();
-
-            // 처음에는 첫 번째 화면만 보이게 함
-            //ShowScreen(screen1);
         }
 
         private void InitScreens()
@@ -59,27 +59,40 @@ namespace WindowsFormsApp1
                 RowCount = 1,
                 Height = 50,
             };
-            Time_lbl = new Label
+            TapTimePanel = new TableLayoutPanel
             {
-                Text = "asdqw",
-                Font = new Font("맑은 고딕", 14F),
-                Dock = DockStyle.Left,
-                Height = 40,
-                TextAlign = ContentAlignment.MiddleCenter,
-            };
-            Day_lbl = new Label
-            {
-                Text = "asd",
-                Font = new Font("맑은 고딕", 14F),
-                Dock = DockStyle.Right,
-                Height = 40,
-                TextAlign = ContentAlignment.MiddleCenter,
+                Dock = DockStyle.Top,
+                ColumnCount = 2,
+                RowCount = 1,
+                Height = 50,
             };
             startPanel = new Panel
             {
                 Dock = DockStyle.Fill,
-                Height = 23,
+                Height = 60,
             };
+            loginPanel = new Panel
+            {
+                Dock = DockStyle.Fill,
+                Height = 60,
+            };
+            tapPanel = new Panel
+            {
+                Dock = DockStyle.Fill,
+                Height = 60,
+            };
+            joinPanel = new Panel
+            {
+                Dock = DockStyle.Fill,
+                Height = 60,
+            };
+            resultPanel = new Panel
+            {
+                Dock = DockStyle.Fill,
+                Height = 60,
+            };
+            Login logIN = new Login(loginPanel);
+            TapTest tapTest = new TapTest(tapPanel, TapTimePanel);
 
             PictureBox Startemotion = new PictureBox
             {
@@ -87,13 +100,9 @@ namespace WindowsFormsApp1
                 Dock = DockStyle.Fill,
                 SizeMode = PictureBoxSizeMode.StretchImage
             };
-            // 각 열의 크기를 25%로 설정
-            for (int i = 0; i < 4; i++)
-            {
-                mMenuPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            }
+            
             //회원가입 버튼, 로그인 버튼, 테스트 버튼, 기록 확인 버튼
-            Button join_btn = new Button
+            Button joinMenu = new Button
             { 
                 Text = "JOIN",
                 Dock = DockStyle.Bottom,
@@ -101,7 +110,7 @@ namespace WindowsFormsApp1
                 Height = 50,
                 FlatStyle = FlatStyle.Flat
             };
-            Button login_btn = new Button
+            Button loginMenu = new Button
             { 
                 Text = "LOGIN",
                 Dock = DockStyle.Bottom,
@@ -109,7 +118,7 @@ namespace WindowsFormsApp1
                 Height = 50,
                 FlatStyle = FlatStyle.Flat
             };
-            Button test_btn = new Button 
+            Button testMenu = new Button 
             { 
                 Text = "TEST",
                 Dock = DockStyle.Bottom,
@@ -117,7 +126,7 @@ namespace WindowsFormsApp1
                 Height = 50,
                 FlatStyle = FlatStyle.Flat
             };
-            Button record_btn = new Button 
+            Button recordMenu = new Button 
             {
                 Text = "RECORD",
                 Dock = DockStyle.Bottom,
@@ -126,38 +135,68 @@ namespace WindowsFormsApp1
                 FlatStyle = FlatStyle.Flat 
             };
 
+            // 메뉴 영역
+            for (int i = 0; i < 4; i++)
+            {
+                mMenuPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            }
+            Time_lbl = new Label
+            {
+                Font = new Font("맑은 고딕", 14F),
+                Dock = DockStyle.Left,
+                Height = 40,
+                TextAlign = ContentAlignment.MiddleCenter,
+            };
+            Day_lbl = new Label
+            {
+                Font = new Font("맑은 고딕", 14F),
+                Dock = DockStyle.Right,
+                Height = 40,
+                TextAlign = ContentAlignment.MiddleCenter,
+            };
+
             //시작화면 gif 클릭 이벤트
             Startemotion.Click += (s, e) =>
             {
                 startPanel.Hide();
                 mMenuPanel.Show();
+                //loginPanel.BringToFront();
+                //loginPanel.Show();
+                loginPanel.Hide();
+                tapPanel.BringToFront();
+                tapPanel.Show();
+                mTimePanel.Hide();
             };
 
             //메뉴 버튼 클릭 이벤트
-            join_btn.MouseDown += MouseDownColor;
-            join_btn.MouseUp += MouseUpColor;
-            login_btn.MouseDown += MouseDownColor;
-            login_btn.MouseUp += MouseUpColor;
-            test_btn.MouseDown += MouseDownColor;
-            test_btn.MouseUp += MouseUpColor;
-            record_btn.MouseDown += MouseDownColor;
-            record_btn.MouseUp += MouseUpColor;
-
+            joinMenu.MouseDown += MouseDownColor;
+            joinMenu.MouseUp += MouseUpColor;
+            loginMenu.MouseDown += MouseDownColor;
+            loginMenu.MouseUp += MouseUpColor;
+            testMenu.MouseDown += MouseDownColor;
+            testMenu.MouseUp += MouseUpColor;
+            recordMenu.MouseDown += MouseDownColor;
+            recordMenu.MouseUp += MouseUpColor;
 
             //시작 버튼
-            //startPanel.Controls.Add(Start_btn);
             startPanel.Controls.Add(Startemotion);
+
             //메뉴 버튼
-            mMenuPanel.Controls.Add(join_btn);
-            mMenuPanel.Controls.Add(login_btn);
-            mMenuPanel.Controls.Add(test_btn);
-            mMenuPanel.Controls.Add(record_btn);
+            mMenuPanel.Controls.Add(joinMenu);
+            mMenuPanel.Controls.Add(loginMenu);
+            mMenuPanel.Controls.Add(testMenu);
+            mMenuPanel.Controls.Add(recordMenu);
+
             //상단 시간 날짜
             mTimePanel.Controls.Add(Time_lbl);
             mTimePanel.Controls.Add(Day_lbl);
             this.Controls.Add(mMenuPanel);
             this.Controls.Add(mTimePanel);
             this.Controls.Add(startPanel);
+            this.Controls.Add(loginPanel);
+            this.Controls.Add(TapTimePanel);
+            this.Controls.Add(tapPanel);
+
             mMenuPanel.Hide();
             watch = new Timer
             {
@@ -203,5 +242,6 @@ namespace WindowsFormsApp1
             Time_lbl.Text = DateTime.Now.ToString("HH:mm:ss");
             Day_lbl.Text = DateTime.Now.ToString("dddd");
         }
+
     }
 }
