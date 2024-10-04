@@ -41,6 +41,8 @@ namespace WindowsFormsApp1
             }
             else
             {
+                //결과 보내주기
+                //record(tapcount);
                 timer.Stop();
                 tenCount = 10;
                 tapCount = 0;

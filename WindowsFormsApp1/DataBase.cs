@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,7 +14,6 @@ namespace WindowsFormsApp1
         //DB OPEN, CLOSE
         //경로 지정 C로
         //회원 테이블이 있고 기록 테이블 있고 기록 테이블에 컬럼을 id나 닉네임으로 회원 구분하기
-
         //private static string DBpath = "../TapTestData.db";
         private static string DBpath = @"../TapTest.db";
         private static SqliteConnection mConnectDB = new SqliteConnection($"Data Source = {DBpath};");
@@ -49,9 +49,10 @@ namespace WindowsFormsApp1
 
         public void CreateTable()
         {
-            string[] Query = {
-        "CREATE TABLE IF NOT EXISTS RECORD(NICKNAME STRING, date STRING, dayRecord STRING)",
-        "CREATE TABLE IF NOT EXISTS INFORMATION(ID STRING, PW STRING, NICKNAME STRING)"
+            string[] Query = 
+            {
+                "CREATE TABLE IF NOT EXISTS RECORD(NICKNAME STRING, date STRING, dayRecord STRING)",
+                "CREATE TABLE IF NOT EXISTS INFORMATION(ID STRING, PW STRING, NICKNAME STRING)",
             };
 
             using (SqliteCommand command = new SqliteCommand(Query.ToString(), mConnectDB))

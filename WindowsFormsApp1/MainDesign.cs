@@ -19,14 +19,15 @@ namespace WindowsFormsApp1
         //class 분할생각
         //고정 패널 : 시계, 날짜 ,메뉴탭, 요일
         Panel startPanel;
-        Panel joinPanel;
-        Panel loginPanel;
+        
         Panel testPanel;
         Panel recordPanel;
         Panel commomPanel;
 
+        TableLayoutPanel joinPanel;
         TableLayoutPanel TapTimePanel;
         TableLayoutPanel mTimePanel;
+        TableLayoutPanel loginPanel;
         public static TableLayoutPanel mMenuPanel;
 
         Label Time_lbl;
@@ -71,9 +72,11 @@ namespace WindowsFormsApp1
                 Dock = DockStyle.Fill,
                 Height = 60,
             };
-            loginPanel = new Panel
+            loginPanel = new TableLayoutPanel
             {
                 Dock = DockStyle.Fill,
+                ColumnCount = 3,
+                RowCount = 5,
                 Height = 60,
             };
             testPanel = new Panel
@@ -81,18 +84,21 @@ namespace WindowsFormsApp1
                 Dock = DockStyle.Fill,
                 Height = 60,
             };
-            joinPanel = new Panel
+            joinPanel = new TableLayoutPanel
             {
                 Dock = DockStyle.Fill,
-                Height = 60,
+                ColumnCount = 3,
+                RowCount = 5,
             };
             recordPanel = new Panel
             {
                 Dock = DockStyle.Fill,
                 Height = 60,
             };
+            Join join = new Join(joinPanel);
             Login logIN = new Login(loginPanel);
             TapTest tapTest = new TapTest(testPanel, TapTimePanel);
+            //Record record = new Record(recordPanel);
 
             PictureBox Startemotion = new PictureBox
             {
@@ -140,6 +146,27 @@ namespace WindowsFormsApp1
             {
                 mMenuPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             }
+
+            //로그인 패널
+            loginPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
+            loginPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            loginPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            loginPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
+            loginPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 15F));
+            loginPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 15F));
+            loginPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 30F));
+            loginPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
+
+            //회원가입 패널
+            joinPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 30F));
+            joinPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            joinPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
+            joinPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 15F));
+            joinPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 15F));
+            joinPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 15F));
+            joinPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 15F));
+            joinPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 30F));
+
             Time_lbl = new Label
             {
                 Font = new Font("맑은 고딕", 14F),
@@ -193,6 +220,7 @@ namespace WindowsFormsApp1
             this.Controls.Add(mMenuPanel);
             this.Controls.Add(mTimePanel);
             this.Controls.Add(startPanel);
+            this.Controls.Add(joinPanel);
             this.Controls.Add(loginPanel);
             this.Controls.Add(testPanel);
             this.Controls.Add(TapTimePanel);
