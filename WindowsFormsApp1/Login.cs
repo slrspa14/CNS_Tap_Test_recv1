@@ -11,7 +11,8 @@ namespace WindowsFormsApp1
     internal class Login
     {
         //ID, PW 검사해서 로그인 성공/실패
-        //로그인시 닉네임 가져와서 띄우기
+        //로그인시 닉네임 가져와서 띄우기'
+        DataBase dataBase = new DataBase();
         private Panel loginPanel;
         private TextBox mUserID;
         private TextBox mUserPW;
@@ -57,7 +58,7 @@ namespace WindowsFormsApp1
                 //Dock = DockStyle.None,
                 Height = 30,
                 Width = 100,
-                Location = new Point(125, 100),
+                //Location = new Point(125, 100),
                 Text = "ID",
                 Font = new Font("맑은 고딕", 10F),
                 ForeColor = Color.Gray,
@@ -66,7 +67,7 @@ namespace WindowsFormsApp1
 
             mUserPW = new TextBox
             {
-                Dock = DockStyle.None,
+                //Dock = DockStyle.None,
                 Height = 30,
                 Width = 30,
                 Text = "PW",
@@ -91,6 +92,8 @@ namespace WindowsFormsApp1
             mUserPW.KeyDown += LoginKeydown;
             mUserID.GotFocus += (s, e) => ClearTextBox(mUserID, "ID");
             mUserPW.GotFocus += (s, e) => ClearTextBox(mUserID, "PW");
+
+            loginbtn.Click += (s, e) => dataBase.SelectTapData();
 
             //로그인 패널
             loginPanel.Controls.Add(mUserID);

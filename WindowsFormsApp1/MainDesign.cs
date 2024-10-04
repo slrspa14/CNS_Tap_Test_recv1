@@ -21,13 +21,13 @@ namespace WindowsFormsApp1
         Panel startPanel;
         Panel joinPanel;
         Panel loginPanel;
-        Panel tapPanel;
-        Panel resultPanel;
+        Panel testPanel;
+        Panel recordPanel;
         Panel commomPanel;
 
         TableLayoutPanel TapTimePanel;
         TableLayoutPanel mTimePanel;
-        TableLayoutPanel mMenuPanel;
+        public static TableLayoutPanel mMenuPanel;
 
         Label Time_lbl;
         Label Day_lbl;
@@ -76,7 +76,7 @@ namespace WindowsFormsApp1
                 Dock = DockStyle.Fill,
                 Height = 60,
             };
-            tapPanel = new Panel
+            testPanel = new Panel
             {
                 Dock = DockStyle.Fill,
                 Height = 60,
@@ -86,13 +86,13 @@ namespace WindowsFormsApp1
                 Dock = DockStyle.Fill,
                 Height = 60,
             };
-            resultPanel = new Panel
+            recordPanel = new Panel
             {
                 Dock = DockStyle.Fill,
                 Height = 60,
             };
             Login logIN = new Login(loginPanel);
-            TapTest tapTest = new TapTest(tapPanel, TapTimePanel);
+            TapTest tapTest = new TapTest(testPanel, TapTimePanel);
 
             PictureBox Startemotion = new PictureBox
             {
@@ -160,23 +160,22 @@ namespace WindowsFormsApp1
             {
                 startPanel.Hide();
                 mMenuPanel.Show();
-                //loginPanel.BringToFront();
-                //loginPanel.Show();
-                loginPanel.Hide();
-                tapPanel.BringToFront();
-                tapPanel.Show();
-                mTimePanel.Hide();
+                ShowPanel(loginPanel);
             };
 
             //메뉴 버튼 클릭 이벤트
             joinMenu.MouseDown += MouseDownColor;
             joinMenu.MouseUp += MouseUpColor;
+            joinMenu.Click += Click_JoinPanel;
             loginMenu.MouseDown += MouseDownColor;
             loginMenu.MouseUp += MouseUpColor;
+            loginMenu.Click += Click_LoginPanel;
             testMenu.MouseDown += MouseDownColor;
             testMenu.MouseUp += MouseUpColor;
+            testMenu.Click += Click_TapTestPanel;
             recordMenu.MouseDown += MouseDownColor;
             recordMenu.MouseUp += MouseUpColor;
+            recordMenu.Click += Click_RecordPanel;
 
             //시작 버튼
             startPanel.Controls.Add(Startemotion);
@@ -190,13 +189,16 @@ namespace WindowsFormsApp1
             //상단 시간 날짜
             mTimePanel.Controls.Add(Time_lbl);
             mTimePanel.Controls.Add(Day_lbl);
+
             this.Controls.Add(mMenuPanel);
             this.Controls.Add(mTimePanel);
             this.Controls.Add(startPanel);
             this.Controls.Add(loginPanel);
+            this.Controls.Add(testPanel);
             this.Controls.Add(TapTimePanel);
-            this.Controls.Add(tapPanel);
+            this.Controls.Add(recordPanel);
 
+            TapTimePanel.Hide();
             mMenuPanel.Hide();
             watch = new Timer
             {
@@ -205,6 +207,11 @@ namespace WindowsFormsApp1
             watch.Tick += Timer;
             watch.Start();
             UpdateTime();
+        }
+
+        private void LoginMenu_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private void MouseDownColor(object sender, MouseEventArgs e)
@@ -243,5 +250,37 @@ namespace WindowsFormsApp1
             Day_lbl.Text = DateTime.Now.ToString("dddd");
         }
 
+        private void ShowPanel(Panel showPanel)
+        {
+            List<Panel> allPanels = new List<Panel> { joinPanel, loginPanel, testPanel, recordPanel, TapTimePanel};
+            foreach(Panel panel in allPanels)
+            {
+                panel.Hide();
+            }
+            showPanel.BringToFront();
+            showPanel.Show();
+        }
+        //메뉴 버튼 이벤트
+        private void Click_JoinPanel(object s, EventArgs e)
+        {
+            mTimePanel.Show();
+            ShowPanel(joinPanel);
+        }
+        private void Click_LoginPanel(object s, EventArgs e)
+        {
+            mTimePanel.Show();
+            ShowPanel(loginPanel);
+        }
+        private void Click_TapTestPanel(object s, EventArgs e)
+        {
+            mTimePanel.Hide();//시간 숨기기
+            ShowPanel(testPanel);
+            TapTimePanel.Show();
+        }
+        private void Click_RecordPanel(object s, EventArgs e)
+        {
+            mTimePanel.Show();
+            ShowPanel(recordPanel);
+        }
     }
 }

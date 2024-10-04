@@ -81,6 +81,22 @@ namespace WindowsFormsApp1
             }
 
         }
+        public string SelectID(string ID)
+        {
+            StringBuilder record = new StringBuilder();
+            mQuery = "SELECT ID FROM USERINFROMATION WHERE ";
+            using (SqliteCommand command = new SqliteCommand(mQuery, mConnectDB))
+            {
+                using (SqliteDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        record.AppendLine($"{reader["dayRecord"]}");
+                    }
+                }
+                return record.ToString();
+            }
+        }
     }
 
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApp1
 {
-    internal class Result
+    internal class Record
     {
         //결과값 시각화(그래프)
         //닉네임 시간 띄우기

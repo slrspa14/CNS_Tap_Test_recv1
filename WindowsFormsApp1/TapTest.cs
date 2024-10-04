@@ -34,11 +34,20 @@ namespace WindowsFormsApp1
 
         public void TimerTick(object s, EventArgs e)
         {
-            if(tenCount >= 1)
+            if(tenCount > 0)
             {
+                MainDesign.mMenuPanel.Enabled = false;
                 tenCount--;
             }
+            else
+            {
+                timer.Stop();
+                tenCount = 10;
+                tapCount = 0;
+                MainDesign.mMenuPanel.Enabled = true;
+            }
             UpdateTime();
+
         }
         private void UpdateTime()
         {
