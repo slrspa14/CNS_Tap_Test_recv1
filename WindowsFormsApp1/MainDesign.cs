@@ -310,5 +310,19 @@ namespace WindowsFormsApp1
             mTimePanel.Show();
             ShowPanel(recordPanel);
         }
+
+        public static void RestoreTextBox(TextBox txt, string defaultText)
+        {
+            if (string.IsNullOrWhiteSpace(txt.Text))
+            {
+                txt.Text = defaultText;  // 기본 텍스트로 복구
+                txt.ForeColor = Color.Gray;  // 회색으로 기본 텍스트 표시
+
+                if (defaultText == "PW")
+                {
+                    txt.PasswordChar = '\0';  // 비밀번호 가림 해제
+                }
+            }
+        }
     }
 }

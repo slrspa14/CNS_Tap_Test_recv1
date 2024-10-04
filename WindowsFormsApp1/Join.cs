@@ -118,9 +118,11 @@ namespace WindowsFormsApp1
             mUserPW.GotFocus += (s, e) => ClearTextBox(mUserPW, "PW");
             mUserNickName.GotFocus += (s, e) => ClearTextBox(mUserNickName, "NickName");
 
-            mUserID.LostFocus += (s, e) => RestoreTextBox(mUserID, "ID");
-            mUserPW.LostFocus += (s, e) => RestoreTextBox(mUserPW, "PW");
-            mUserNickName.LostFocus += (s, e) => RestoreTextBox(mUserNickName, "NickName");
+            //mUserID.LostFocus += (s, e) => RestoreTextBox(mUserID, "ID");
+            //mUserPW.LostFocus += (s, e) => RestoreTextBox(mUserPW, "PW");
+            //mUserNickName.LostFocus += (s, e) => RestoreTextBox(mUserNickName, "NickName");
+
+            mUserID.LostFocus += (s, e) => MainDesign.RestoreTextBox(mUserID, "ID");
 
             //패널 추가
             mJoinpanel.Controls.Add(mID_lbl, 0, 1);
@@ -143,6 +145,7 @@ namespace WindowsFormsApp1
                 //사용 가능 ID
 
                 isDuplication = true;
+                mCheckID_btn.Enabled = false;
             }
             else
             {
@@ -220,7 +223,7 @@ namespace WindowsFormsApp1
             ValidUserInformation(ID, PW);
         }
 
-        private void ClearTextBox(System.Windows.Forms.TextBox txt, string defaultText)
+        private void ClearTextBox(TextBox txt, string defaultText)
         {
             if (txt.Text == defaultText)
             {
@@ -234,18 +237,18 @@ namespace WindowsFormsApp1
             }
         }
 
-        private void RestoreTextBox(System.Windows.Forms.TextBox txt, string defaultText)
-        {
-            if (string.IsNullOrWhiteSpace(txt.Text))
-            {
-                txt.Text = defaultText;  // 기본 텍스트로 복구
-                txt.ForeColor = Color.Gray;  // 회색으로 기본 텍스트 표시
+        //private void RestoreTextBox(TextBox txt, string defaultText)
+        //{
+        //    if (string.IsNullOrWhiteSpace(txt.Text))
+        //    {
+        //        txt.Text = defaultText;  // 기본 텍스트로 복구
+        //        txt.ForeColor = Color.Gray;  // 회색으로 기본 텍스트 표시
 
-                if (defaultText == "PW")
-                {
-                    txt.PasswordChar = '\0';  // 비밀번호 가림 해제
-                }
-            }
-        }
+        //        if (defaultText == "PW")
+        //        {
+        //            txt.PasswordChar = '\0';  // 비밀번호 가림 해제
+        //        }
+        //    }
+        //}
     }
 }
