@@ -18,6 +18,7 @@ namespace WindowsFormsApp1
         //tap 할 때에는 시계랑 요일 숨기고 탭 카운트랑 10초로 띄우기
         //class 분할생각
         //고정 패널 : 시계, 날짜 ,메뉴탭, 요일
+        DataBase mDB = new DataBase();
         Panel startPanel;
         
         Panel testPanel;
@@ -35,13 +36,15 @@ namespace WindowsFormsApp1
         private Timer watch;
         private Button currentStatus = null;
         private string gifPath = @"D:\test.gif";
-
+        
 
         public MainDesign()
         {
             InitializeComponent();
             CenterToScreen();
             InitScreens();
+            mDB.OpenDB();
+            mDB.CreateTable();
         }
 
         private void InitScreens()
@@ -309,6 +312,20 @@ namespace WindowsFormsApp1
         {
             mTimePanel.Show();
             ShowPanel(recordPanel);
+        }
+
+        public static void ClearTextBox(System.Windows.Forms.TextBox txt, string defaultText)
+        {
+            if (txt.Text == defaultText)
+            {
+                txt.Text = "";  // 클릭하면 텍스트 사라짐
+                txt.ForeColor = SystemColors.WindowText;  // 글자색 검정으로 변경
+
+                if (defaultText == "PW")
+                {
+                    txt.PasswordChar = '*';  // 비밀번호 입력 시 가림
+                }
+            }
         }
 
         public static void RestoreTextBox(TextBox txt, string defaultText)

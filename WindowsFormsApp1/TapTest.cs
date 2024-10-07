@@ -25,6 +25,8 @@ namespace WindowsFormsApp1
         Label TapCount;
         private int tapCount = 0;
         private int tenCount = 10;
+        private DataBase mDB = new DataBase();
+
         public TapTest(Panel TestPanel, TableLayoutPanel TapTimePanel)
         {
             this.panel = TestPanel;
@@ -42,7 +44,9 @@ namespace WindowsFormsApp1
             else
             {
                 //결과 보내주기
+                //여기서 바로 데이터 저장하고나서 저장된 다음에 결과창 자동으로 호출되게
                 //record(tapcount);
+                mDB.InsertTapData("NickName", tapCount, DateTime.Now.ToString("dd"));
                 timer.Stop();
                 tenCount = 10;
                 tapCount = 0;
